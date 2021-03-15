@@ -1,0 +1,24 @@
+--- snapper-0.8.15/doc/snapper.xml.in~	2020-12-17 13:43:33.000000000 +0100
++++ snapper-0.8.15/doc/snapper.xml.in	2021-03-15 21:22:46.488538426 +0100
+@@ -39,9 +39,7 @@
+ 
+     <para>Snapper never modifies the content of snapshots. Thus snapper creates
+     read-only snapshots if supported by the kernel. Supported filesystems are
+-    btrfs and ext4 (discontinued) as well as snapshots of LVM logical volumes with
+-    thin-provisioning. Some filesystems might not be supported depending on your
+-    installation.</para>
++    btrfs as well as snapshots of LVM logical volumes with thin-provisioning.</para>
+   </refsect1>
+ 
+   <refsect1 id='concepts'>
+@@ -342,8 +340,8 @@
+ 	    <varlistentry>
+ 	      <term><option>-f, --fstype</option> <replaceable>fstype</replaceable></term>
+ 	      <listitem>
+-		<para>Manually set filesystem type. Supported values are btrfs, ext4
+-		(discontinued) and lvm. For lvm, snapper uses LVM thin-provisioned snapshots.
++		<para>Manually set filesystem type. Supported values are btrfs and lvm.
++		For lvm, snapper uses LVM thin-provisioned snapshots.
+ 		The filesystem type on top of LVM must be provided in parentheses,
+ 		e.g. lvm(xfs).</para>
+ 		<para>Without this option snapper tries to detect the filesystem.</para>
