@@ -56,11 +56,11 @@ Requires:	libxml2-devel
 This package contains header files and documentation for developing
 with snapper.
 
-%package -n pam_snapper
+%package -n pam-pam_snapper
 Summary:	PAM module for calling snapper
 Requires:	%{name} = %{version}-%{release}
 
-%description -n pam_snapper
+%description -n pam-pam_snapper
 A PAM module for calling snapper during user login and logout.
 
 %prep
