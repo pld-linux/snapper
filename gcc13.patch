@@ -1,0 +1,20 @@
+--- snapper-0.8.15/snapper/Snapper.h.orig	2023-07-05 11:48:11.280057383 +0200
++++ snapper-0.8.15/snapper/Snapper.h	2023-07-05 11:49:21.270441224 +0200
+@@ -25,6 +25,7 @@
+ #define SNAPPER_SNAPPER_H
+ 
+ 
++#include <cstdint>
+ #include <vector>
+ #include <boost/noncopyable.hpp>
+ 
+--- snapper-0.8.15/snapper/Snapshot.h.orig	2023-07-05 11:48:11.233390460 +0200
++++ snapper-0.8.15/snapper/Snapshot.h	2023-07-05 11:50:59.260978628 +0200
+@@ -25,6 +25,7 @@
+ #define SNAPPER_SNAPSHOT_H
+ 
+ 
++#include <cstdint>
+ #include <time.h>
+ #include <sys/types.h>
+ #include <string>

@@ -9,6 +9,7 @@ URL:		http://snapper.io
 Patch0:		remove-ext4-info-xml.patch
 Patch1:		json-c.patch
 Patch2:		systemd-install.patch
+Patch3:		gcc13.patch
 BuildRequires:	acl-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -68,6 +69,7 @@ A PAM module for calling snapper during user login and logout.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # use libexecdir
 find -type f -exec sed -i -e "s|/usr/lib/snapper|%{_libexecdir}/%{name}|g" {} ';'
