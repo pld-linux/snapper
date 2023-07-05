@@ -108,6 +108,9 @@ cp -p examples/c/*.c examples/c++-lib/*.cc $RPM_BUILD_ROOT%{_examplesdir}/%{name
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post   libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
+
 %files -f snapper.lang
 %defattr(644,root,root,755)
 %doc AUTHORS
