@@ -1,15 +1,12 @@
 Summary:	Tool for filesystem snapshot management
 Name:		snapper
-Version:	0.8.15
-Release:	6
+Version:	0.12.0
+Release:	1
 License:	GPL v2
 Source0:	https://github.com/openSUSE/snapper/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	df0e34b092bde0d8447360adc7bffb3a
+# Source0-md5:	080b8af3a35b527aaf0120a1dc06bbfb
 URL:		http://snapper.io
 Patch0:		remove-ext4-info-xml.patch
-Patch1:		json-c.patch
-Patch2:		systemd-install.patch
-Patch3:		gcc13.patch
 BuildRequires:	acl-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -66,13 +63,12 @@ A PAM module for calling snapper during user login and logout.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch -P 0 -p1
 
 # use libexecdir
-find -type f -exec sed -i -e "s|/usr/lib/snapper|%{_libexecdir}/%{name}|g" {} ';'
+find -type f -exec \
+	%{__sed} -i -e "s|/usr/lib/snapper|%{_libexecdir}/%{name}|g" \
+	            -e "s|/usr/lib/systemd|/lib/systemd|g" {} ';'
 
 %build
 %{__libtoolize}
@@ -81,6 +77,7 @@ find -type f -exec sed -i -e "s|/usr/lib/snapper|%{_libexecdir}/%{name}|g" {} ';
 %{__autoheader}
 %{__automake}
 %configure \
+	--with-pam-security=/%{_lib}/security \
 	--disable-ext4 \
 	--disable-zypp \
 	--enable-selinux
@@ -117,8 +114,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/snapper
 %attr(755,root,root) %{_sbindir}/mksubvolume
 %attr(755,root,root) %{_sbindir}/snapperd
+%attr(755,root,root) %{_sbindir}/snbk
 %config(noreplace) /etc/logrotate.d/snapper
-%config(noreplace) /etc/dbus-1/system.d/org.opensuse.Snapper.conf
+%{_datadir}/snapper
+%{_datadir}/dbus-1/system.d/org.opensuse.Snapper.conf
 %{_datadir}/dbus-1/system-services/org.opensuse.Snapper.service
 %dir %{_libexecdir}/%{name}
 %{_libexecdir}/%{name}/installation-helper
@@ -126,21 +125,21 @@ rm -rf $RPM_BUILD_ROOT
 %{systemdunitdir}/%{name}-*.timer
 %{systemdunitdir}/%{name}-*.service
 %{systemdunitdir}/snapperd.service
+%{_mandir}/man5/snapper-backup-configs.5*
 %{_mandir}/man5/snapper-configs.5*
 %{_mandir}/man8/%{name}.8*
 %{_mandir}/man8/mksubvolume.8*
 %{_mandir}/man8/snapperd.8*
+%{_mandir}/man8/snbk.8*
 
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libsnapper.so.*.*.*
-%ghost %{_libdir}/libsnapper.so.5
+%ghost %{_libdir}/libsnapper.so.7
 %dir %{_sysconfdir}/%{name}
+%dir %{_sysconfdir}/%{name}/backup-configs
+%dir %{_sysconfdir}/%{name}/certs
 %dir %{_sysconfdir}/%{name}/configs
-%dir %{_sysconfdir}/%{name}/config-templates
-%config(noreplace) %{_sysconfdir}/%{name}/config-templates/default
-%dir %{_sysconfdir}/%{name}/filters
-%config(noreplace) %{_sysconfdir}/%{name}/filters/*.txt
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
 
 %files devel
