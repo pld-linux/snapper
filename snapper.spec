@@ -1,7 +1,7 @@
 Summary:	Tool for filesystem snapshot management
 Name:		snapper
 Version:	0.12.0
-Release:	2
+Release:	3
 License:	GPL v2
 Source0:	https://github.com/openSUSE/snapper/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	080b8af3a35b527aaf0120a1dc06bbfb
